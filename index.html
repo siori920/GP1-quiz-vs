@@ -1,1 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名護市クイズサイネージ</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1080px;
+            height: 1400px;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
 
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #dd6438 0%, #e89b3c 100%);
+        }
+
+        /* Question text */
+        .question {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            text-align: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: #fcf2e5;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Choice buttons */
+        .choices {
+            position: absolute;
+            top: 350px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+        }
+
+        .choice {
+            display: block;
+            width: 100%;
+            margin: 20px 0;
+            padding: 20px 40px;
+            background: #fcf2e5;
+            border: none;
+            border-radius: 50px;
+            font-size: 50px;
+            font-weight: bold;
+            color: #000;
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .choice:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        /* Menu button - 下部に固定 */
+        .menu-button {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 80px;
+            background: #fcf2e5;
+            border: none;
+            border-radius: 40px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .menu-button:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .beer-mug {
+            position: absolute;
+            bottom: 300px;
+            right: 150px;
+            width: 120px;
+            height: 150px;
+        }
+
+        .beer-glass {
+            width: 80px;
+            height: 100px;
+            background: #F4D03F;
+            border: 4px solid #2C3E50;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .beer-foam {
+            width: 88px;
+            height: 30px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            position: absolute;
+            top: -15px;
+            left: -8px;
+        }
+
+        .beer-handle {
+            width: 20px;
+            height: 40px;
+            border: 4px solid #2C3E50;
+            border-left: none;
+            border-radius: 0 20px 20px 0;
+            position: absolute;
+            right: -24px;
+            top: 20px;
+        }
+
+        /* Result screen styles */
+        .result-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result-card {
+            width: 600px;
+            height: 400px;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .correct-card {
+            background: #fcf2e5;
+        }
+
+        .incorrect-card {
+            background: #fcf2e5;
+        }
+
+        .result-header {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .result-main {
+            font-size: 72px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .result-footer {
+            font-size: 28px;
+            line-height: 1.4;
+        }
+
+        /* Quiz screen */
+        .quiz-screen {
+            display: block;
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Loading message */
+        .loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fcf2e5;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Quiz Screen -->
+    <div class="quiz-screen" id="quizScreen">
+        <!-- Beer mug decoration -->
+        <div class="beer-mug">
+            <div class="beer-glass">
+                <div class="beer-foam"></div>
+                <div class="beer-handle"></div>
+            </div>
+        </div>
+
+        <!-- Quiz content -->
+        <div class="question" id="question"></div>
+        
+        <div class="choices">
+            <button class="choice" id="choiceA" onclick="selectAnswer('A')"></button>
+            <button class="choice" id="choiceB" onclick="selectAnswer('B')"></button>
+            <button class="choice" id="choiceC" onclick="selectAnswer('C')"></button>
+            <button class="choice" id="choiceD" onclick="selectAnswer('D')"></button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="result-screen" id="resultScreen">
+        <div class="result-card" id="resultCard">
+            <div class="result-header" id="resultHeader"></div>
+            <div class="result-main" id="resultMain"></div>
+            <div class="result-footer" id="resultFooter"></div>
+        </div>
+    </div>
+
+    <!-- Menu button (always visible) -->
+    <button class="menu-button" onclick="returnToQuiz()">メニュー</button>
+
+    <script>
+        // Quiz data with correct answers
+        const quizData = [
+            {
+                question: "日本三景に数えられていない場所はどれ？",
+                choices: ["A. 松島（宮城県）", "B. 天橋立（京都府）", "C. 宮島（広島県）", "D. 白川郷（岐阜県）"],
+                correct: "D"
+            },
+            {
+                question: "有名な雷門が入口になっている寺はどれ？",
+                choices: ["A. 増上寺", "B. 浅草寺", "C. 寛永寺", "D. 上野東照宮"],
+                correct: "B"
+            },
+            {
+                question: "「ひつまぶし」に使われている主な食材は？",
+                choices: ["A. 牛肉", "B. 鮭", "C. うなぎ", "D. タコ"],
+                correct: "C"
+            }
+        ];
+
+        let currentQuiz = null;
+
+        // Random quiz selection
+        function loadRandomQuiz() {
+            const randomIndex = Math.floor(Math.random() * quizData.length);
+            currentQuiz = quizData[randomIndex];
+            
+            document.getElementById('question').innerText = currentQuiz.question;
+            document.getElementById('choiceA').innerText = currentQuiz.choices[0];
+            document.getElementById('choiceB').innerText = currentQuiz.choices[1];
+            document.getElementById('choiceC').innerText = currentQuiz.choices[2];
+            document.getElementById('choiceD').innerText = currentQuiz.choices[3];
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedChoice) {
+            const isCorrect = selectedChoice === currentQuiz.correct;
+            showResult(isCorrect);
+        }
+
+        // Show result screen
+        function showResult(isCorrect) {
+            const quizScreen = document.getElementById('quizScreen');
+            const resultScreen = document.getElementById('resultScreen');
+            const resultCard = document.getElementById('resultCard');
+            const resultHeader = document.getElementById('resultHeader');
+            const resultMain = document.getElementById('resultMain');
+            const resultFooter = document.getElementById('resultFooter');
+
+            // Hide quiz screen and show result screen
+            quizScreen.classList.add('hidden');
+            resultScreen.style.display = 'flex';
+
+            if (isCorrect) {
+                // Correct answer
+                resultCard.className = 'result-card correct-card';
+                resultHeader.textContent = 'お見事！';
+                resultMain.textContent = '正解！';
+                resultFooter.textContent = 'もっと名護を知りたい方は\nこちら';
+            } else {
+                // Incorrect answer
+                resultCard.className = 'result-card incorrect-card';
+                resultHeader.textContent = '残念...';
+                resultMain.textContent = '不正解！';
+                resultFooter.textContent = '正解を知りたい方はこちら';
+            }
+        }
+
+        // Return to quiz screen
+        function returnToQuiz() {
+            const quizScreen = document.getElementById('quizScreen');
+            const resultScreen = document.getElementById('resultScreen');
+
+            // Hide result screen and show quiz screen
+            resultScreen.style.display = 'none';
+            quizScreen.classList.remove('hidden');
+
+            // Load a new random quiz
+            loadRandomQuiz();
+        }
+
+        // Load quiz on page load
+        window.addEventListener('load', () => {
+            loadRandomQuiz();
+        });
+    </script>
+</body>
+</html>
