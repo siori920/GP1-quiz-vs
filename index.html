@@ -8,8 +8,8 @@
         body {
             margin: 0;
             padding: 0;
-            width: 1075px;
-            height: 1265px;
+            width: 810px;
+            height: 945px;
             position: relative;
             overflow: hidden;
             font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', 'Meiryo', sans-serif;
@@ -25,12 +25,12 @@
         /* Question text */
         .question {
             position: absolute;
-            top: 80px;
+            top: 120px;
             left: 50%;
             transform: translateX(-50%);
-            width: 650px;
+            width: 490px;
             text-align: center;
-            font-size: 32px;
+            font-size: 24px;
             font-weight: bold;
             color: #fcf2e5;
             line-height: 1.4;
@@ -39,47 +39,48 @@
         /* Choice buttons */
         .choices {
             position: absolute;
-            top: 280px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 700px;
+            transform: translate(-50%, -50%);
+            width: 530px;
+            margin-top: 30px;
         }
         .choice {
             display: block;
             width: 100%;
-            margin: 18px 0;
-            padding: 20px 30px;
+            margin: 13px 0;
+            padding: 15px 25px;
             background: #fcf2e5;
             border: none;
-            border-radius: 30px;
-            font-size: 28px;
+            border-radius: 22px;
+            font-size: 21px;
             font-weight: bold;
             color: #000;
             text-align: left;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
             transition: transform 0.2s;
         }
         .choice:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
         }
         /* Menu button - 下部に固定 */
         .menu-button {
             position: absolute;
-            bottom: 120px;
+            bottom: 90px;
             left: 50%;
             transform: translateX(-50%);
-            width: 180px;
-            height: 65px;
+            width: 140px;
+            height: 50px;
             background: #fcf2e5;
             border: none;
-            border-radius: 25px;
-            font-size: 24px;
+            border-radius: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: #000;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -87,41 +88,41 @@
         }
         .menu-button:hover {
             transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
         }
         .beer-mug {
             position: absolute;
-            bottom: 120px;
-            right: 80px;
-            width: 90px;
-            height: 125px;
+            bottom: 90px;
+            right: 60px;
+            width: 68px;
+            height: 94px;
         }
         .beer-glass {
-            width: 60px;
-            height: 80px;
+            width: 45px;
+            height: 60px;
             background: #F4D03F;
-            border: 3px solid #2C3E50;
-            border-radius: 8px;
+            border: 2px solid #2C3E50;
+            border-radius: 6px;
             position: relative;
         }
         .beer-foam {
-            width: 66px;
-            height: 24px;
+            width: 50px;
+            height: 18px;
             background: #FFFFFF;
             border-radius: 50%;
             position: absolute;
-            top: -12px;
-            left: -3px;
+            top: -9px;
+            left: -2px;
         }
         .beer-handle {
-            width: 15px;
-            height: 30px;
-            border: 3px solid #2C3E50;
+            width: 11px;
+            height: 22px;
+            border: 2px solid #2C3E50;
             border-left: none;
-            border-radius: 0 15px 15px 0;
+            border-radius: 0 11px 11px 0;
             position: absolute;
-            right: -18px;
-            top: 15px;
+            right: -13px;
+            top: 11px;
         }
         /* Result screen styles */
         .result-screen {
@@ -135,15 +136,15 @@
             align-items: center;
         }
         .result-card {
-            width: 500px;
-            height: 350px;
-            border-radius: 25px;
+            width: 380px;
+            height: 260px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
             position: relative;
         }
         .correct-card {
@@ -153,19 +154,19 @@
             background: #fcf2e5;
         }
         .result-header {
-            font-size: 28px;
+            font-size: 21px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #000;
         }
         .result-main {
-            font-size: 56px;
+            font-size: 42px;
             font-weight: bold;
-            margin-bottom: 25px;
+            margin-bottom: 18px;
             color: #000;
         }
         .result-footer {
-            font-size: 22px;
+            font-size: 17px;
             line-height: 1.4;
             color: #000;
         }
@@ -184,7 +185,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fcf2e5;
-            font-size: 18px;
+            font-size: 14px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
     </style>
